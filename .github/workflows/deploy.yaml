@@ -63,8 +63,8 @@ jobs:
             docker pull ${{ secrets.DOCKER_USER }}/docker-project-frontend:latest
             
             # Останавливаем и удаляем все старые контейнеры
-            docker stop momo-store-backend momo-store-frontend momo-store-nginx || true
-            docker rm -f momo-store-backend momo-store-frontend momo-store-nginx || true
+            docker stop $(docker ps -q) || true
+            docker rm -f $(docker ps -aq) || true
             
             # Удаляем старую сеть и создаем новую
             docker network rm app-network || true
