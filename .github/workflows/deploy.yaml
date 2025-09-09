@@ -59,9 +59,16 @@ jobs:
             docker login -u ${{ secrets.DOCKER_USER }} -p ${{ secrets.DOCKER_PASSWORD }}
             docker pull ${{ secrets.DOCKER_USER }}/docker-project-backend:latest
             docker pull ${{ secrets.DOCKER_USER }}/docker-project-frontend:latest
-            docker network create app-network || true
-            docker rm -f momo-store-backend || true
-            docker rm -f momo-store-frontend || true
+            
+            # Останавливаем и удаляем все старые контейнеры
+            docker stop momo-store-backend momo-store-frontend momo-store-nginx || true
+            docker rm -f momo-store-backend momo-store-frontend momo-store-nginx || true
+            
+            # Удаляем старую сеть и создаем новую
+            docker network rm app-network || true
+            docker network create app-network
+            
+            # Запускаем новые контейнеры
             docker run -d \
               --name momo-store-backend \
               --restart unless-stopped \
