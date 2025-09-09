@@ -62,6 +62,9 @@ jobs:
             docker pull ${{ secrets.DOCKER_USER }}/docker-project-backend:latest
             docker pull ${{ secrets.DOCKER_USER }}/docker-project-frontend:latest
             
+            # Останавливаем системный nginx если он запущен
+            sudo systemctl stop nginx || true
+            
             # Останавливаем и удаляем все старые контейнеры
             docker stop $(docker ps -q) || true
             docker rm -f $(docker ps -aq) || true
