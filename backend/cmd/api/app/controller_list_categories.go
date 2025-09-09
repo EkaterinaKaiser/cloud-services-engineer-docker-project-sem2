@@ -18,8 +18,6 @@ func (i *Instance) ListCategoriesController(w http.ResponseWriter, r *http.Reque
 		{ID: 3, Name: "Сваренные", Description: "Неувядающая классика"},
 	}
 
-	w.Header().Set("Access-Control-Allow-Origin", "*")
-	w.Header().Set("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE")
 	w.Header().Set("Content-Type", "application/json")
 	_ = json.NewEncoder(w).Encode(categories)
 }
