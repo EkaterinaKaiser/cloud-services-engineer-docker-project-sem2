@@ -26,14 +26,17 @@ func newRouter(app *app.Instance) (http.Handler, error) {
 		corses.Handler,
 	)
 
-	r.Group(func(r chi.Router) {
+	r.Route("/api", func(r chi.Router) {
 		r.Use(
 			app.TimingsMiddleware,
 			app.RequestsMiddleware,
 		)
 
+		r.Get("/products/", app.ListDumplingsController)
 		r.Get("/products", app.ListDumplingsController)
+		r.Get("/categories/", app.ListCategoriesController)
 		r.Get("/categories", app.ListCategoriesController)
+		r.Post("/orders/", app.CreateOrderController)
 		r.Post("/orders", app.CreateOrderController)
 
 		r.Get("/auth/whoami", app.WhoAmIController)
