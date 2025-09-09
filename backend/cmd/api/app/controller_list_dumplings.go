@@ -29,9 +29,22 @@ func (i *Instance) ListDumplingsController(w http.ResponseWriter, r *http.Reques
 	w.Header().Set("Access-Control-Allow-Origin", "*")
 	w.Header().Set("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE")
 	w.Header().Set("Content-Type", "application/json")
+	
+	// Создаем пагинированный ответ
+	totalCount := len(packs)
+	totalPages := 1
+	if totalCount > 0 {
+		totalPages = (totalCount + 11) / 12 // PAGE_SIZE = 12
+	}
+	
 	_ = json.NewEncoder(w).
-		Encode(map[string][]dumplings.Product{
-			"results": packs,
+		Encode(map[string]interface{}{
+			"count":        totalCount,
+			"total_pages":  totalPages,
+			"current_page": 1,
+			"next":         nil,
+			"previous":     nil,
+			"results":      packs,
 		})
 
 	for _, pack := range packs {
