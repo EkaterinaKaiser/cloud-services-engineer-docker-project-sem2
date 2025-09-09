@@ -16,7 +16,9 @@ func newRouter(app *app.Instance) (http.Handler, error) {
 	r := chi.NewRouter()
 
 	corses := cors.New(cors.Options{
-		AllowedOrigins:   []string{"*"},
+		AllowedOrigins:   []string{"http://89.169.156.255", "http://89.169.156.255:80", "http://localhost:8080"},
+		AllowedMethods:   []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
+		AllowedHeaders:   []string{"*"},
 		AllowCredentials: true,
 	})
 

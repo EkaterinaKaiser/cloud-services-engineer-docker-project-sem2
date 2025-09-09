@@ -1,6 +1,7 @@
 import axios, { AxiosRequestHeaders } from 'axios';
 import { parse } from 'cookie';
 
+console.log('API Base URL:', process.env.VUE_APP_API_URL);
 axios.defaults.baseURL = process.env.VUE_APP_API_URL;
 class ApiService {
 
