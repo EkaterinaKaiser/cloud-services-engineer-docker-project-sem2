@@ -78,9 +78,6 @@ jobs:
               -p 8080:8080 \
               -e PORT=8080 \
               ${{ secrets.DOCKER_USER }}/docker-project-backend:latest
-            docker build -t ${{ secrets.DOCKER_USER }}/docker-project-frontend:latest \
-              --build-arg VUE_APP_API_URL=http://89.169.156.255:8080 \
-              ./frontend/
             docker run -d \
               --name momo-store-frontend \
               --restart unless-stopped \
