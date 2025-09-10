@@ -76,8 +76,8 @@ jobs:
               --name momo-store-backend \
               --restart unless-stopped \
               --network app-network \
-              -p 8080:8080 \
-              -e PORT=8080 \
+              -p 8081:8081 \
+              -e PORT=8081 \
               ${{ secrets.DOCKER_USER }}/docker-project-backend:latest
             docker run -d \
               --name momo-store-frontend \

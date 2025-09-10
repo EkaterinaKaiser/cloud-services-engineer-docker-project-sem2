@@ -24,6 +24,6 @@ RUN chown appuser:appuser main
 
 USER appuser
 
-EXPOSE 8080
+EXPOSE 8081
 
 CMD ["./main"]
