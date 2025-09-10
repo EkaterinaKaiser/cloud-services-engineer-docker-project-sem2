@@ -8,7 +8,7 @@ RUN npm install --no-audit --no-fund && npm cache clean --force
 
 COPY . .
 
-ARG VUE_APP_API_URL
+ARG VUE_APP_API_URL=http://89.169.156.255:8080
 ENV VUE_APP_API_URL=$VUE_APP_API_URL
 
 RUN npm run build
