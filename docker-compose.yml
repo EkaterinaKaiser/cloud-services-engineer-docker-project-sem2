@@ -8,9 +8,9 @@ services:
     container_name: momo-store-backend
     restart: unless-stopped
     ports:
-      - "8080:8080"
+      - "8081:8081"
     environment:
-      - PORT=8080
+      - PORT=8081
     networks:
       - app-network
 
@@ -24,7 +24,7 @@ services:
       - "80:80"
     environment:
       - NODE_ENV=production
-      - VUE_APP_API_URL=http://89.169.156.255:8080
+      - VUE_APP_API_URL=http://89.169.156.255:8081
     networks:
       - app-network
     depends_on:
