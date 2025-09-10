@@ -20,3 +20,4 @@ DOCKER_USER, DOCKER_PASSWORD, SSH_USER, SSH_PRIVATE_KEY.
 
 4. Инфраструктура и устойчивость приложения:
 
+В docker-compose описаны все сервисы, добавлен перезапуск и healthchecks. 
