@@ -10,6 +10,11 @@ services:
       - PORT=8081
     networks:
       - app-network
+    mem_limit: 256m
+    cpus: "0.5"
+    pids_limit: 200
+    ulimits:
+      nofile: 4096
     healthcheck:
       test: ["CMD", "wget", "-qO-", "http://localhost:8081/health"]
       interval: 30s
@@ -26,6 +31,11 @@ services:
       - PORT=8081
     networks:
       - app-network
+    mem_limit: 256m
+    cpus: "0.5"
+    pids_limit: 200
+    ulimits:
+      nofile: 4096
     healthcheck:
       test: ["CMD", "wget", "-qO-", "http://localhost:8081/health"]
       interval: 30s
@@ -45,6 +55,11 @@ services:
     depends_on:
       - backend-1
       - backend-2
+    mem_limit: 256m
+    cpus: "0.5"
+    pids_limit: 200
+    ulimits:
+      nofile: 4096
     healthcheck:
       test: ["CMD", "wget", "-qO-", "http://localhost/"]
       interval: 30s
@@ -65,6 +80,11 @@ services:
       - frontend
       - backend-1
       - backend-2
+    mem_limit: 256m
+    cpus: "0.5"
+    pids_limit: 200
+    ulimits:
+      nofile: 4096
 
 networks:
   app-network:
