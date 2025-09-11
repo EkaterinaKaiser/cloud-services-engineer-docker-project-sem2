@@ -10,6 +10,7 @@ COPY . .
 
 ARG VUE_APP_API_URL=/api
 ENV VUE_APP_API_URL=$VUE_APP_API_URL
+ENV NODE_OPTIONS=--openssl-legacy-provider
 
 RUN npm run build
 
