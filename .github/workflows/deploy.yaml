@@ -71,17 +71,35 @@ jobs:
             docker network rm app-network || true
             docker network create app-network
             
-            # Запускаем новые контейнеры
+            # Запускаем 2 экземпляра бэкенда (без публикации портов)
             docker run -d \
-              --name momo-store-backend \
+              --name backend-1 \
               --restart unless-stopped \
               --network app-network \
-              -p 8081:8081 \
               -e PORT=8081 \
               ${{ secrets.DOCKER_USER }}/docker-project-backend:latest
             docker run -d \
-              --name momo-store-frontend \
+              --name backend-2 \
+              --restart unless-stopped \
+              --network app-network \
+              -e PORT=8081 \
+              ${{ secrets.DOCKER_USER }}/docker-project-backend:latest
+
+            # Фронтенд (ходит на /api)
+            docker run -d \
+              --name frontend \
+              --restart unless-stopped \
+              --network app-network \
+              ${{ secrets.DOCKER_USER }}/docker-project-frontend:latest
+
+            # Подтянуть актуальный nginx.conf и запустить балансировщик на 80
+            rm -f nginx.conf || true
+            wget -O nginx.conf https://raw.githubusercontent.com/${{ github.repository }}/main/nginx.conf
+            docker run -d \
+              --name nginx \
               --restart unless-stopped \
               --network app-network \
               -p 80:80 \
+              -v $(pwd)/nginx.conf:/etc/nginx/nginx.conf:ro \
+              nginx:alpine
               ${{ secrets.DOCKER_USER }}/docker-project-frontend:latest
