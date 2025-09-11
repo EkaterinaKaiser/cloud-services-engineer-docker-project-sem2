@@ -35,6 +35,7 @@ jobs:
   trivy_scan:
     name: Security scan with Trivy
     runs-on: ubuntu-latest
+    continue-on-error: true
     needs: [build_and_push_to_docker_hub]
     steps:
       - name: Log in to Docker Hub

@@ -1,4 +1,4 @@
-FROM golang:1.17-alpine AS builder
+FROM golang:1.24-alpine AS builder
 
 RUN apk add --no-cache git
 
@@ -10,22 +10,16 @@ RUN go mod download
 
 COPY . .
 
-RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o main ./cmd/api
+RUN CGO_ENABLED=0 GOOS=linux go build -trimpath -ldflags="-s -w" -o main ./cmd/api
 
-FROM alpine:latest
+FROM gcr.io/distroless/static:nonroot
 
-RUN apk add --no-cache curl
+WORKDIR /
 
-WORKDIR /root/
-
-COPY --from=builder /app/main .
-
-RUN adduser -D -s /bin/sh appuser
-
-RUN chown appuser:appuser main
-
-USER appuser
+COPY --from=builder /app/main /main
 
 EXPOSE 8081
 
-CMD ["./main"]
+USER nonroot:nonroot
+
+ENTRYPOINT ["/main"]

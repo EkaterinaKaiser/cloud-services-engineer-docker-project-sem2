@@ -1,4 +1,4 @@
-FROM node:16-alpine AS builder
+FROM node:20-alpine AS builder
 
 WORKDIR /app
 
@@ -13,13 +13,14 @@ ENV VUE_APP_API_URL=$VUE_APP_API_URL
 
 RUN npm run build
 
-FROM nginx:alpine
+FROM nginx:1.27-alpine
 
 RUN apk add --no-cache curl
 
 COPY --from=builder /app/dist /usr/share/nginx/html
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 
-EXPOSE 80
+USER 101:101
+EXPOSE 8080
 
 CMD ["nginx", "-g", "daemon off;"]
